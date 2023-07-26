@@ -1,18 +1,51 @@
 const router = require('express').Router();
+const { Model } = require('sequelize');
 const { Product, Category, Tag, ProductTag } = require('../../models');
 
 // The `/api/products` endpoint
 
 // get all products
-router.get('/', (req, res) => {
+router.get('/', async (req, res) => {
   // find all products
   // be sure to include its associated Category and Tag data
+  try {
+
+    // When a user searches '/api/products' it will display all the table contents within 'productData'
+    const productData = await Product.findAll({
+      include: [{ model: Category }, { model: Tag, through: Category, as: "tags" }]
+    });
+
+    // Then sends the 'productData' as a response in JSON format
+    res.status(200).json(productData);
+  } catch (err) {
+    res.status(500).json(err);
+  }
 });
 
 // get one product
-router.get('/:id', (req, res) => {
+router.get('/:id', async (req, res) => {
   // find a single product by its `id`
   // be sure to include its associated Category and Tag data
+  try {
+
+    // Takes the users ID search and matches it to the same id within the product table/model and stores it within 'productData'
+    const productData = await Product.findByPk(req.params.id, {
+
+      // It will also respond with the Category model and the associated Tag model of the user searched product ID 
+      include: [{ model: Category }, { model: Tag, through: Category, as: "tags" }]
+    });
+
+    // If it cannot find an ID that matches to that of the database, it will send back a response stating so
+    if (!productData) {
+      res.status(404).json({ message: 'Cannot find category with this id!' });
+      return;
+    }
+
+    // Otherwise it will respond with the stored data in 'productData'
+    res.status(200).json(productData);
+  } catch (err) {
+    res.status(500).json(err);
+  }
 });
 
 // create new product
