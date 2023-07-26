@@ -10,33 +10,72 @@ class Product extends Model {}
 Product.init(
   {
     // define columns
+    // product id column for product table
     id: {
+
+      // Takes in Integers
       type: DataTypes.INTEGER,
+
+      // Cannot take in Null Values
       allowNull: false,
+
+      // Is a Primary Key
       primaryKey: true,
+
+      // Allows Auto Increment
       autoIncrement: true
     },
+
+    // product_name column for product table
     product_name: {
+
+      // Takes in Strings
       type: DataTypes.STRING,
+
+      // // Cannot take in Null Values
       allowNull: false
     },
+
+    // price column for product table
     price: {
+
+      // Takes in Decimals
       type: DataTypes.DECIMAL,
+
+      // Cannot take in Null Values
       allowNull: false,
+
+      // Validates if Decimal Value is true
       validate: {
         isDecimal: true
       }
     },
+
+    // stock column for product table
     stock: {
+
+      // Takes in Integers
       type: DataTypes.INTEGER,
+
+      // Cannot take in Null Values
       allowNull: false,
+
+      // Sets a default value of 10
       defaultValue: 10,
+
+      // Validates Integer Value to Numeric is true
       validate: {
         isNumeric: true
       }
     },
+
+    // category_id column for product table
     category_id: {
+
+      // Takes in Integers
       type: DataTypes.INTEGER,
+
+      // category_id column references the category tables id
       references: {
         model: 'category',
         key: 'id'
