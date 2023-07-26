@@ -75,7 +75,7 @@ Product.init(
       // Takes in Integers
       type: DataTypes.INTEGER,
 
-      // References category tables id
+      // category_id column references the category tables id
       references: {
         model: 'category',
         key: 'id'

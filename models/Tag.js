@@ -7,7 +7,7 @@ class Tag extends Model {}
 Tag.init(
   {
     // define columns
-    // tag id column
+    // tag id column for tag table
     id: {
 
       // Takes in Integers
@@ -23,7 +23,7 @@ Tag.init(
       autoIncrement: true
     },
 
-    // tag_name column
+    // tag_name column for tag table
     tag_name: {
 
       // Takes in Strings
